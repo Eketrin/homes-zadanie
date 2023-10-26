@@ -14,6 +14,11 @@ namespace дома
         {
             NazvanieCity = NazvanieCity1;
         }
+        public List<Zdanie> zdanies = new List<Zdanie>();
+        public void AddZdanie(Zdanie zdanie)
+        {
+            zdanies.Add(zdanie);
+        }
     }
     class Zdanie
     {
@@ -31,6 +36,10 @@ namespace дома
             BillForMonth = BillForMonth1;
         }
         public List<Room> rooms = new List<Room>();
+        public void AddRoom(Room room)
+        {
+            rooms.Add(room);
+        }
 
     }
     abstract class Room //помещение
@@ -87,13 +96,29 @@ namespace дома
     {
         static void Main(string[] args)
         {
-            Zdanie z1 = new Zdanie("улица", 18, 40, 20);
+            City city1 = new City("Moscow");
+            Zdanie z1 = new Zdanie("улица Чертановская", 18, 40, 20);
             Kvartira kvartira1 = new Kvartira(1, 12, z1.BillForMonth, "фамилия", 4);
             Kvartira kvartira2 = new Kvartira(2, 10, z1.BillForMonth, "фамилия2", 2);
             Ofis ofis1 = new Ofis(3, 10, z1.BillForMonth, "kompany", "деятельность");
-            kvartira1.CountBillForMonth();
-            kvartira2.CountBillForMonth();
-            ofis1.CountBillForMonth();
+            city1.AddZdanie(z1);
+            z1.AddRoom(kvartira1);
+            z1.AddRoom(kvartira2);
+            z1.AddRoom(ofis1);
+            Console.WriteLine("здания в городе:");
+            foreach (var city in city1.zdanies)
+            {
+                Console.WriteLine(city.NameOfStreet);
+                Console.WriteLine("помещения в здании:");
+                foreach (var zdanie in city.rooms)
+                {
+                    Console.WriteLine(zdanie.NumOfRoom);
+                    zdanie.CountBillForMonth();
+                }
+            }
+            
+            
+
             Console.ReadLine();
         }
     }
